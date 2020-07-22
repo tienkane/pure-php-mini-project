@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8" />
-    <title>Bài viết | Pure PHP Mini Project</title>
+    <title>Chỉnh sửa bài viết | Pure PHP Mini Project</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
     <link rel="stylesheet" href="../../assets/css/bootstrap.css" type="text/css" />
     <link rel="stylesheet" href="../../assets/css/theme.css" type="text/css" />
@@ -149,69 +149,59 @@
                     <div class="padding d-flex">
                         <div class="page-title">
                             <h2 class="text-md text-highlight">Bài viết</h2>
-                            <small class="text-muted">Quản lý bài viết</small>
+                            <small class="text-muted">Chỉnh sửa bài viết</small>
                         </div>
-                    </div>
-                </div>
-                <div class="page-content page-container">
-                    <div class="padding py-0">
-                        <a href="?controller=post&action=create" class="btn btn-success text-light">Tạo mới</a>
                     </div>
                 </div>
                 <div class="page-content page-container" id="page-content">
                     <div class="padding">
-                        <div class="table-responsive">
-                            <table id="datatable" class="table table-theme table-row v-middle" data-plugin="dataTable">
-                                <thead>
-                                <tr>
-                                    <th><span class="text-muted">ID</span></th>
-                                    <th><span class="text-muted">Tiêu đề</span></th>
-                                    <th><span class="text-muted">Nội dung</span></th>
-                                    <th><span class="text-muted">Đã tạo</span></th>
-                                    <th><span class="text-muted">Đã cập nhật</span></th>
-                                    <th></th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                <?php foreach ($posts as $post) { ?>
-                                    <tr class=" " data-id="<?php echo $post->id ?>">
-                                        <td style="width:30px;text-align:center">
-                                            <small class="text-muted"><?php echo $post->id ?></small>
-                                        </td>
-                                        <td style="width:120px">
-                                            <?php echo $post->title ?>
-                                        </td>
-                                        <td class="flex" style="max-width: 500px">
-                                            <div class="item-except h-2x">
-                                                <?php echo $post->content ?>
-                                            </div>
-                                        </td>
-                                        <td>
-                                            <?php echo (($post->created_at != null) ? $post->created_at : 'Không xác định') ?>
-                                        </td>
-                                        <td>
-                                            <?php echo (($post->updated_at != null) ? $post->updated_at : 'Không xác định') ?>
-                                        </td>
-                                        <td>
-                                            <div class="item-action dropdown">
-                                                <a href="#" data-toggle="dropdown" class="text-muted">
-                                                    <i data-feather="more-vertical"></i>
-                                                </a>
-                                                <div class="dropdown-menu dropdown-menu-right bg-black" role="menu">
-                                                    <a href="?controller=post&action=edit&post_id=<?php echo $post->id ?>" class="dropdown-item">
-                                                        Sửa
-                                                    </a>
-                                                    <div class="dropdown-divider"></div>
-                                                    <a href="?controller=post&action=delete&post_id=<?php echo $post->id ?>" class="dropdown-item btn-delete">
-                                                        Xoá
-                                                    </a>
+                        <div class="row">
+                            <div class="col-12">
+                                <form data-plugin="parsley" data-option="{}" method="post" action="?controller=post&action=update">
+                                    <input type="hidden" name="post_id" value="<?php echo $post->id ?>">
+                                    <div class="card">
+                                        <div class="card-header">
+                                            <strong>Chỉnh sửa</strong>
+                                        </div>
+                                        <div class="card-body">
+                                            <div class="form-row">
+                                                <div class="form-group col-sm-6">
+                                                    <label>Tiêu đề</label>
+                                                    <input value="<?php if(isset($title_value)) {
+                                                                            echo $title_value;
+                                                    } else {
+                                                        echo $post->title;
+                                                    }  ?>" type="text" name="title" class="form-control" placeholder="Hãy nhập tiêu đề" required>
                                                 </div>
                                             </div>
-                                        </td>
-                                    </tr>
-                                <?php } ?>
-                                </tbody>
-                            </table>
+                                            <div class="form-group">
+                                                <label>Nội dung</label>
+                                                <div class="mb-3 card">
+                                                        <textarea id="summernote" data-plugin="summernote" data-option="{}" name="content" required>
+                                                            <?php
+                                                                if (isset($content_value)) {
+                                                                    echo $content_value;
+                                                                } else {
+                                                                    echo $post->content;
+                                                            } ?>
+                                                        </textarea>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <p class="text-danger">
+                                                    <?php
+                                                        if (isset($error)) echo $error;
+                                                    ?>
+                                                </p>
+                                            </div>
+                                            <div class="text-center pt-2">
+                                                <button type="submit" class="btn btn-danger mr-2">Chỉnh sửa</button>
+                                                <a href="/" class="btn btn-warning text-light">Trở về</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -250,15 +240,5 @@
     <script src="../../assets/js/theme.js"></script>
     <script src="../../assets/js/utils.js"></script>
     <!-- endbuild -->
-    <script>
-        let btnDelete = document.querySelectorAll('.btn-delete');
-        for (let i = 0; i < btnDelete.length; i++) {
-            btnDelete[i].onclick = function (e) {
-                let check = confirm('Bạn có chắc muốn xoá bài viết này?');
-                if (check) return;
-                else e.preventDefault();
-            }
-        }
-    </script>
 </body>
 </html>
