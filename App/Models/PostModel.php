@@ -26,9 +26,10 @@
 
         public function editPost($post_id, $title, $content)
         {
+            $time = date('Y-m-d H:i:s', time());
             return $this->execute("
                 UPDATE posts
-                SET title = '$title', content = '$content'
+                SET title = '$title', content = '$content', updated_at = '$time'
                 WHERE id = $post_id
             ");
         }
