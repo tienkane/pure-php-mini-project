@@ -19,7 +19,8 @@
             $user = $user_model->getUser($_SESSION['username']);
             $posts = $post_model->getAllPosts($user->id);
 
-            $data['screen'] = 'dashboard';
+            $data['screen'] = 'layout';
+            $data['page'] = 'dashboard';
             $data['user'] = $user;
             $data['posts'] = $posts;
 
@@ -28,7 +29,8 @@
 
         public function create()
         {
-            $data['screen'] = 'create';
+            $data['screen'] = 'layout';
+            $data['page'] = 'create';
             $this->loadView($data);
         }
 
@@ -41,13 +43,15 @@
             preg_replace('/[^A-Za-z0-9\-]/', '', $content);
 
             if (strlen($title) < 10) {
-                $data['screen'] = 'create';
+                $data['screen'] = 'layout';
+                $data['page'] = 'create';
                 $data['error'] = 'Tiêu đề phải chứa ít nhất 10 ký tự!';
                 $data['title_value'] = $title;
                 $data['content_value'] = $content;
                 $this->loadView($data);
             } elseif (strlen($content) < 310) {
-                $data['screen'] = 'create';
+                $data['screen'] = 'layout';
+                $data['page'] = 'create';
                 $data['error'] = 'Nội dung phải chứa ít nhất 50 ký tự!';
                 $data['title_value'] = $title;
                 $data['content_value'] = $content;
@@ -58,7 +62,8 @@
 
                 $user = $user_model->getUser($_SESSION['username']);
                 if (!$post_model->createPost($user->id, $title, $content)) {
-                    $data['screen'] = 'create';
+                    $data['screen'] = 'layout';
+                    $data['page'] = 'create';
                     $data['error'] = 'Tạo mới thất bại!';
                     $data['title_value'] = $title;
                     $data['content_value'] = $content;
@@ -74,7 +79,8 @@
             $post_id = $_GET['post_id'];
             $model = $this->loadModel('Post');
             $post = $model->getPostById($post_id);
-            $data['screen'] = 'edit';
+            $data['screen'] = 'layout';
+            $data['page'] = 'edit';
             $data['post'] = $post;
             $this->loadView($data);
         }
@@ -89,13 +95,15 @@
             preg_replace('/[^A-Za-z0-9\-]/', '', $content);
 
             if (strlen($title) < 10) {
-                $data['screen'] = 'edit';
+                $data['screen'] = 'layout';
+                $data['page'] = 'edit';
                 $data['error'] = 'Tiêu đề phải chứa ít nhất 10 ký tự!';
                 $data['title_value'] = $title;
                 $data['content_value'] = $content;
                 $this->loadView($data);
             } elseif (strlen($content) < 310) {
-                $data['screen'] = 'edit';
+                $data['screen'] = 'layout';
+                $data['page'] = 'edit';
                 $data['error'] = 'Nội dung phải chứa ít nhất 50 ký tự!';
                 $data['title_value'] = $title;
                 $data['content_value'] = $content;
@@ -104,7 +112,8 @@
                 $model = $this->loadModel('Post');
 
                 if (!$model->editPost($post_id, $title, $content)) {
-                    $data['screen'] = 'edit';
+                    $data['screen'] = 'layout';
+                    $data['page'] = 'edit';
                     $data['error'] = 'Chỉnh sửa thất bại!';
                     $data['title_value'] = $title;
                     $data['content_value'] = $content;
