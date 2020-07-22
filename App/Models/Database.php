@@ -13,19 +13,19 @@
             mysqli_set_charset($this->conn,"utf8");
         }
 
-//        public function fetchAllRecords($query)
-//        {
-//            $sql_query = mysqli_query($this->conn, $query);
-//            if (!$sql_query) {
-//                die('Truy vấn tất cả bản ghi thất bại!');
-//            }
-//            $data = [];
-//            while ($result = mysqli_fetch_object($sql_query)) {
-//                array_push($data, $result);
-//            }
-//            return $data;
-//        }
-//
+        public function fetchAllRecords($query)
+        {
+            $sql_query = mysqli_query($this->conn, $query);
+            if (!$sql_query) {
+                die('Truy vấn tất cả bản ghi thất bại!');
+            }
+            $data = [];
+            while ($result = mysqli_fetch_object($sql_query)) {
+                array_push($data, $result);
+            }
+            return $data;
+        }
+
         public function fetchARecord($query)
         {
             $sql_query = mysqli_query($this->conn, $query);
@@ -52,13 +52,4 @@
             }
             return mysqli_num_rows($query_sql);
         }
-//
-//        public function countRecords($query)
-//        {
-//            $sql_query = mysqli_query($this->conn, $query);
-//            if (!$sql_query) {
-//                die('Truy vấn đếm bản ghi thất bại!');
-//            }
-//            return mysqli_num_rows($sql_query);
-//        }
     }

@@ -13,6 +13,16 @@
 
         public function index()
         {
-            require_once  ROOT . '/App/Views/dashboard.php';
+            $user_model = $this->loadModel('User');
+            $post_model = $this->loadModel('Post');
+
+            $user = $user_model->getUser($_SESSION['username']);
+            $posts = $post_model->getAllPosts($user->id);
+
+            $data['screen'] = 'dashboard';
+            $data['user'] = $user;
+            $data['posts'] = $posts;
+
+            $this->loadView($data);
         }
     }

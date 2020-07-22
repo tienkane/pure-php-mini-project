@@ -26,6 +26,21 @@
             $model = $this->loadModel('User');
             $username = isset($_POST['username']) ? $_POST['username'] : '';
             $password = isset($_POST['password']) ? $_POST['password'] : '';
+
+            if (
+                strpos($username, ';') !== false ||
+                strpos($username, '"') !== false ||
+                strpos($username, "'") !== false ||
+                strpos($password, ';') !== false ||
+                strpos($password, '"') !== false ||
+                strpos($password, "'") !== false
+            ) {
+                $data['screen'] = 'login';
+                $data['error'] = 'Ký tự không hợp lệ!';
+                $this->loadView($data);
+                return;
+            }
+
             if (!$model->checkUser($username, md5($password))) {
                 if (!$model->checkUsername($username)) {
                     $data['screen'] = 'login';
@@ -62,6 +77,20 @@
             $username = isset($_POST['username']) ? $_POST['username'] : '';
             $password = isset($_POST['password']) ? $_POST['password'] : '';
             $confirm_password = isset($_POST['confirm_password']) ? $_POST['confirm_password'] : '';
+
+            if (
+                strpos($username, ';') !== false ||
+                strpos($username, '"') !== false ||
+                strpos($username, "'") !== false ||
+                strpos($password, ';') !== false ||
+                strpos($password, '"') !== false ||
+                strpos($password, "'") !== false
+            ) {
+                $data['screen'] = 'register';
+                $data['error'] = 'Ký tự không hợp lệ!';
+                $this->loadView($data);
+                return;
+            }
 
             $data['username'] = $username;
             $data['password'] = md5($password);
