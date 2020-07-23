@@ -26,14 +26,14 @@
                                 <div class="form-group">
                                     <label>Nội dung</label>
                                     <div class="mb-3 card">
-                                                    <textarea id="summernote" data-plugin="summernote" data-option="{}" name="content" required>
-                                                        <?php
-                                                        if (isset($content_value)) {
-                                                            echo $content_value;
-                                                        } else { ?>
-                                                            <p class="text-muted">Hãy nhập nội dung</p>
-                                                        <?php } ?>
-                                                    </textarea>
+                                        <textarea id="summernote" data-plugin="summernote" data-option="{}" name="content" required>
+                                            <?php
+                                            if (isset($content_value)) {
+                                                echo $content_value;
+                                            } else { ?>
+                                                <p class="text-muted">Hãy nhập nội dung</p>
+                                            <?php } ?>
+                                        </textarea>
                                     </div>
                                 </div>
                                 <div class="form-group">

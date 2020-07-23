@@ -43,17 +43,15 @@
             $content = str_replace("'", '', $content);
             preg_replace('/[^A-Za-z0-9\-]/', '', $content);
 
-            if (strlen($title) < 10) {
+            $dataDetected = $this->detectContent($title, $content);
+            $title = $dataDetected['title'];
+            $content = $dataDetected['content'];
+
+            $postValidation = $this->validatePost($title, $content);
+            if (!$postValidation['valid']) {
                 $data['screen'] = 'layout';
                 $data['page'] = 'create';
-                $data['error'] = 'Tiêu đề phải chứa ít nhất 10 ký tự!';
-                $data['title_value'] = $title;
-                $data['content_value'] = $content;
-                $this->loadView($data);
-            } elseif (strlen($content) < 310) {
-                $data['screen'] = 'layout';
-                $data['page'] = 'create';
-                $data['error'] = 'Nội dung phải chứa ít nhất 50 ký tự!';
+                $data['error'] = $postValidation['error'];
                 $data['title_value'] = $title;
                 $data['content_value'] = $content;
                 $this->loadView($data);
@@ -96,17 +94,15 @@
             $content = str_replace("'", '', $content);
             preg_replace('/[^A-Za-z0-9\-]/', '', $content);
 
-            if (strlen($title) < 10) {
+            $dataDetected = $this->detectContent($title, $content);
+            $title = $dataDetected['title'];
+            $content = $dataDetected['content'];
+
+            $postValidation = $this->validatePost($title, $content);
+            if (!$postValidation['valid']) {
                 $data['screen'] = 'layout';
                 $data['page'] = 'edit';
-                $data['error'] = 'Tiêu đề phải chứa ít nhất 10 ký tự!';
-                $data['title_value'] = $title;
-                $data['content_value'] = $content;
-                $this->loadView($data);
-            } elseif (strlen($content) < 310) {
-                $data['screen'] = 'layout';
-                $data['page'] = 'edit';
-                $data['error'] = 'Nội dung phải chứa ít nhất 50 ký tự!';
+                $data['error'] = $postValidation['error'];
                 $data['title_value'] = $title;
                 $data['content_value'] = $content;
                 $this->loadView($data);
@@ -136,5 +132,34 @@
             } catch (Exception $e) {
                 die($e->getMessage());
             }
+        }
+
+        public function detectContent($title, $content)
+        {
+            while ($title[0] === ' ') {
+                $title = substr($title, 1, strlen($title) - 1);
+            }
+            while ($content[0] === ' ') {
+                $content = substr($content, 1, strlen($content) - 1);
+            }
+            $title = ucfirst($title);
+            $content = ucfirst($content);
+            return ['title' => $title, 'content' => $content];
+        }
+
+        public function validatePost($title, $content)
+        {
+            $test_content = str_replace(" ", '', $content);
+            preg_replace('/[^A-Za-z0-9\-]/', '', $test_content);
+            if (strlen($title) < 10) {
+                $postValidation['error'] = 'Tiêu đề phải chứa ít nhất 10 ký tự!';
+                $postValidation['valid'] = false;
+                return $postValidation;
+            } elseif (strlen($test_content) < 100) {
+                $postValidation['error'] = 'Nội dung phải chứa ít nhất 50 ký tự!';
+                $postValidation['valid'] = false;
+                return $postValidation;
+            }
+            return ['valid' => true];
         }
     }
