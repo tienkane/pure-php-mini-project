@@ -16,7 +16,8 @@
             $user_model = $this->loadModel('User');
             $post_model = $this->loadModel('Post');
 
-            $user = $user_model->getUser($_SESSION['username']);
+            $username = isset($_SESSION['username']) ? $_SESSION['username'] : explode('=', explode('&', $_COOKIE['user_remember_info'])[0])[1];
+            $user = $user_model->getUser($username);
             $posts = $post_model->getAllPosts($user->id);
 
             $data['screen'] = 'layout';
@@ -60,7 +61,8 @@
                 $user_model = $this->loadModel('User');
                 $post_model = $this->loadModel('Post');
 
-                $user = $user_model->getUser($_SESSION['username']);
+                $username = isset($_SESSION['username']) ? $_SESSION['username'] : explode('=', explode('&', $_COOKIE['user_remember_info'])[0])[1];
+                $user = $user_model->getUser($username);
                 if (!$post_model->createPost($user->id, $title, $content)) {
                     $data['screen'] = 'layout';
                     $data['page'] = 'create';
