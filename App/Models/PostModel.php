@@ -6,6 +6,7 @@
             return $this->fetchAllRecords("
                 SELECT * FROM posts
                 WHERE user_id = '$user_id'
+                ORDER BY id DESC
             ");
         }
 

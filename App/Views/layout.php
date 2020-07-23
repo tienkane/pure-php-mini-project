@@ -190,6 +190,13 @@
             else e.preventDefault();
         }
     }
+
+    $(document).ready(function() {
+        setTimeout(function () {
+            $('.sorting_asc')[0].click();
+        }, 200);
+
+    } );
 </script>
 </body>
 </html>
