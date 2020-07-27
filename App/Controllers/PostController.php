@@ -16,7 +16,7 @@
             $user_model = $this->loadModel('User');
             $post_model = $this->loadModel('Post');
 
-            $username = isset($_SESSION['username']) ? $_SESSION['username'] : explode('=', explode('&', $_COOKIE['user_remember_info'])[0])[1];
+            $username = isset($_SESSION['username']) ? $_SESSION['username'] : $_COOKIE['user_remember_info'];
             $user = $user_model->getUser($username);
             $posts = $post_model->getAllPosts($user->id);
 
@@ -59,7 +59,7 @@
                 $user_model = $this->loadModel('User');
                 $post_model = $this->loadModel('Post');
 
-                $username = isset($_SESSION['username']) ? $_SESSION['username'] : explode('=', explode('&', $_COOKIE['user_remember_info'])[0])[1];
+                $username = isset($_SESSION['username']) ? $_SESSION['username'] : $_COOKIE['user_remember_info'];
                 $user = $user_model->getUser($username);
                 if (!$post_model->createPost($user->id, $title, $content)) {
                     $data['screen'] = 'layout';
@@ -144,6 +144,7 @@
             }
             $title = ucfirst($title);
             $content = ucfirst($content);
+            $title = preg_replace(array('/\s{2,}/', '/[\t\n]/'), ' ', $title);
             return ['title' => $title, 'content' => $content];
         }
 

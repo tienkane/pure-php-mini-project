@@ -18,7 +18,7 @@
                 <table id="datatable" class="table table-theme table-row v-middle" data-plugin="dataTable">
                     <thead>
                     <tr>
-                        <th><span class="text-muted">ID</span></th>
+                        <th><span class="text-muted">STT</span></th>
                         <th><span class="text-muted">Tiêu đề</span></th>
                         <th><span class="text-muted">Nội dung</span></th>
                         <th><span class="text-muted">Đã tạo</span></th>
@@ -27,10 +27,12 @@
                     </tr>
                     </thead>
                     <tbody>
+                    <?php $count = 0; ?>
                     <?php foreach ($posts as $post) { ?>
+                        <?php $count++; ?>
                         <tr class=" " data-id="<?php echo $post->id ?>">
                             <td style="width:30px;text-align:center">
-                                <small class="text-muted"><?php echo $post->id ?></small>
+                                <small class="text-muted"><?php echo $count ?></small>
                             </td>
                             <td style="width:120px">
                                 <?php echo $post->title ?>

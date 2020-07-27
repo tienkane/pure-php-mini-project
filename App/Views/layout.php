@@ -191,13 +191,13 @@
         }
     }
 
-    $(document).ready(function() {
-        setTimeout(function () {
-            if ($('.sorting_asc')[0]) {
-                $('.sorting_asc')[0].click();
-            }
-        }, 200);
-    } );
+    // $(document).ready(function() {
+    //     setTimeout(function () {
+    //         if ($('.sorting_asc')[0]) {
+    //             $('.sorting_asc')[0].click();
+    //         }
+    //     }, 200);
+    // } );
 </script>
 </body>
 </html>

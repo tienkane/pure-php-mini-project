@@ -3,14 +3,13 @@
     {
         public function checkLogin()
         {
-            if (isset($_SESSION['username']) && isset($_SESSION['password'])) {
+            if (isset($_SESSION['username'])) {
                 $model = $this->loadModel('User');
-                return $model->checkUser($_SESSION['username'], $_SESSION['password']);
+                return $model->checkUsername($_SESSION['username']);
             } elseif (isset($_COOKIE['user_remember_info'])) {
-                $username = explode('=', explode('&', $_COOKIE['user_remember_info'])[0])[1];
-                $password = explode('=', explode('&', $_COOKIE['user_remember_info'])[1])[1];
+                $username = $_COOKIE['user_remember_info'];
                 $model = $this->loadModel('User');
-                return $model->checkUser($username, $password);
+                return $model->checkUsername($username);
             }
             return false;
         }
@@ -58,10 +57,9 @@
                 }
             } else {
                 if ($_POST['remember'] != null) {
-                    setcookie('user_remember_info', "username=$username&password=" . md5($password), time() + COOKIE_TIME);
+                    setcookie('user_remember_info', $username, time() + COOKIE_TIME);
                 }
                 $_SESSION['username'] = $username;
-                $_SESSION['password'] = md5($password);
                 header('location: /');
             }
         }
@@ -114,7 +112,6 @@
                 $this->loadView($data);
             } else {
                 $_SESSION['username'] = $username;
-                $_SESSION['password'] = md5($password);
                 header('location: /');
             }
         }
